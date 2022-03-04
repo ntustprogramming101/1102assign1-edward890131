@@ -16,12 +16,12 @@ void setup() {
   size(640, 480, P2D);
   
   // make a new instance of a PImage by loading an image file
-  backgroundSky = loadImage("img/bg.jpg"); 
-  backgroundSoil = loadImage("img/soil.png"); 
-  hpLife = loadImage("img/life.png"); 
-  roleGroundhog = loadImage("img/groundhog.png"); 
-  anmyRobot = loadImage("img/robot.png"); 
-  anmySoldier = loadImage("img/soldier.png");
+  backgroundSky = loadImage("bg.jpg"); 
+  backgroundSoil = loadImage("soil.png"); 
+  hpLife = loadImage("life.png"); 
+  roleGroundhog = loadImage("groundhog.png"); 
+  anmyRobot = loadImage("robot.png"); 
+  anmySoldier = loadImage("soldier.png");
   
   //soldier's y > 160
   y1=floor(random(160,400));
