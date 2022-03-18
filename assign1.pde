@@ -1,81 +1,84 @@
 
-// declaring a variable of type PImage
-PImage backgroundSky;
-PImage backgroundSoil;
-PImage hpLife;
-PImage roleGroundhog;
-PImage anmyRobot; 
-PImage anmySoldier;
+PImage sky;
+PImage soil;
+PImage life;
+PImage groundhog;
+PImage robot; 
+PImage soldier;
 
-// x = left & right, y = up & down
-// 1 is for soldier, 2 is for robot, 3 is for laser
-int x1,y1,x2,y2,x3,y3;
+
+int piece = 80;
+int robotX = floor(random(160,560));
+int robotY = piece*2 + floor(random(4))*piece;
+int soldierX;
+int soldierY = piece*2 + floor(random(4))*piece;
+int laserSpeedX = robotX + 25;
+int laserX;
+int laserY = robotY + 37;
+
+
 
 void setup() {
 	
   size(640, 480, P2D);
   
-  // make a new instance of a PImage by loading an image file
-  backgroundSky = loadImage("img/bg.jpg"); 
-  backgroundSoil = loadImage("img/soil.png"); 
-  hpLife = loadImage("img/life.png"); 
-  roleGroundhog = loadImage("img/groundhog.png"); 
-  anmyRobot = loadImage("img/robot.png"); 
-  anmySoldier = loadImage("img/soldier.png");
-  
-  //soldier's y > 160
-  y1=floor(random(160,400));
-  
-  //robot's > 160
-  x2=floor(random(160,560));
-  y2=floor(random(160,400));
-  
-  //laser's y
-  x3 = x2+25;
-  y3 = y2+37-5;
+  sky = loadImage("img/bg.jpg"); 
+  soil = loadImage("img/soil.png"); 
+  life = loadImage("img/life.png"); 
+  groundhog = loadImage("img/groundhog.png"); 
+  robot = loadImage("img/robot.png"); 
+  soldier = loadImage("img/soldier.png");
   
 }
 
 void draw() {
   
-  //set up the bg & item
-  image(backgroundSky, 0, 0);
-  //draw the gress
-  fill(124, 204, 25);
-  noStroke();
-  rect(0, 145, 640, 160);
-  image(backgroundSoil, 0, 160);
-  image(hpLife, 10, 10);
-  image(hpLife, 80, 10);
-  image(hpLife, 150, 10);
-  image(roleGroundhog, 280, 80);
+  image(sky, 0, 0);
+  image(soil, 0, piece*2); //set up the bg 
   
-  //draw the sun
+  noStroke();
+  fill(124, 204, 25);
+  rect(0, 145, 640, 15);  //draw the gress
+  
+
+  image(life, 10, 10);
+  image(life, 80, 10);
+  image(life, 150, 10); //default life *3
+  
+  image(groundhog, 280, 80); 
+  
   fill(255, 255, 0);
   noStroke();
   ellipse(590, 50, 130, 130);
   fill(253, 184, 19);
   noStroke();
-  ellipse(590, 50, 120, 120);
+  ellipse(590, 50, 120, 120); //draw the sun
   
-  //soldier run from lest to right
-  image(anmySoldier, x1-80, y1);
-  //x1 = floor(random(640));
-  x1%=720;
-  x1+=4;
-  
-  //robot
-  image(anmyRobot, x2, y2);
-  
-  //draw the laser
-  fill(255,0,0);
-  noStroke();
-  rect(x3, y3, 40, 10, 100);
-  x3-=2;
-  if (x3 < (x2-160)){
-    x3 = x2+25;
+  soldierX += 2;
+  if(soldierX > width){
+    soldierX =- piece;
   }
   
-  //put the robot upper
-  image(anmyRobot, x2, y2);
+  image(soldier, soldierX, soldierY); //soldier
+  
+ 
+  image(robot, robotX, robotY); //robot
+  
+  
+  laserSpeedX -= 2;
+  laserX += 2;
+  
+  fill(255,0,0);
+  ellipse(laserSpeedX,laserY,10,10);
+  ellipse(laserSpeedX+laserX,laserY,10,10);
+  rect(laserSpeedX,laserY-5,laserX,10);
+  
+  if(laserX >= 30){
+    laserX = 30;
+  }
+  
+  if(laserSpeedX < robotX - 2*piece){
+    laserSpeedX = robotX + 25;
+    laserX = 0;
+  }
 }
